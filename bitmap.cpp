@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define pb push_back
-int n, m, adding = 7; //Initializing the size of the bitmap
+int n, m, adding = 7; //Initializing the size of the bitmap and the adding buffer for p, pDist and visited
 vector<bool> visited(n*m+adding, false); //Initializing the vector of the visited nodes
 vector<int> p(n*m); //Initializing the vector for making the pairs (adj. list pos. <-> vertice)
 vector<pair<int, int>> pDist(n*m+adding); //Initializing the vector of distances for each vertice to the closest '1' (adj. num <-> vertice)
@@ -23,42 +23,43 @@ void BFS(vector<int> adj[], int start) {
 		int curNumNode = q.front(); //Getting the num of the current node from the queue
 		q.pop(); //Deleting the num of the current node from the queue
 
-		if (p[curNumNode] == 1) {
-			for (auto it : adj[curNumNode]) {
-				if (!visited[it]) {
-					visited[it] = true;
-					q.push(it);
+		if (p[curNumNode] == 1) { //If it's a '1' in input matrix:
+			for (auto it : adj[curNumNode]) { //For each neighbour of the current vertice in p
+				if (!visited[it]) { //If the neighbour wasn't visited, 
+					visited[it] = true; //mark him as visited and
+					q.push(it); //push him to the queue
 
-					if (p[it] == 1)
+					if (p[it] == 1) //If the unvisited neighbour is '1', make the distance to it as 0
 						pDist.pb(make_pair(it, 0));
-					else if (p[it] == 0)
+					else if (p[it] == 0) //Else make the distance to it as 1
 						pDist.pb(make_pair(it, 1));
 				}
-				else {
-					if (p[it] == 1 && pDist[it].second != 0)
-						pDist[it].second = 0;
-					else if (p[it] == 0 && pDist[it].second != 1)
-						pDist[it].second = 1;
+				else { //Else if the neighbour was visited, start checking:
+					if (p[it] == 1 && pDist[it].second != 0) //if the visited neighbour is '1' in matrix and the distance to it isn't equal to 0,
+						pDist[it].second = 0; //change the distance to it to 0
+					else if (p[it] == 0 && pDist[it].second != 1) //else if the visited neighbour is '0' and the distance to it isn't equal to 1, 
+						pDist[it].second = 1; //change the distance to it to 1
 				}
 			}
 		}
 
-		else if (p[curNumNode] == 0) {
-			for (auto it : adj[curNumNode]) {
-				if (!visited[it]) {
-					visited[it] = true;
-					q.push(it);
+		else if (p[curNumNode] == 0) { //Else if it's a '0' in input matrix:
+			for (auto it : adj[curNumNode]) { //For each neighbour of the current vertice in p
+				if (!visited[it]) { //If the neighbour wasn't visited, 
+					visited[it] = true; //mark him as visited and
+					q.push(it); //push him to the queue
 
-					if (p[it] == 1)
+					if (p[it] == 1) //If the unvisited neighbour is '1', make the distance to it as 0
 						pDist.pb(make_pair(it, 0));
-					else if (p[it] == 0)
+					else if (p[it] == 0) //Else make the distance to it as : dist = dist to the current vertice + 1 (as it's a neighbour)
 						pDist.pb(make_pair(it, pDist[curNumNode].second + 1));
 				}
-				else {
-					if (p[it] == 0 && pDist[it].second - pDist[curNumNode].second > 1)
-						pDist[it].second = pDist[curNumNode].second + 1;
-					else if (p[it] == 1 && pDist[it].second != 0)
-						pDist[it].second = 0;
+				else { //Else if the neighbour was visited, start checking:
+					if (p[it] == 0 && pDist[it].second - pDist[curNumNode].second > 1) //if the visited neighbour is '0' and
+						pDist[it].second = pDist[curNumNode].second + 1; //the distance to it is greater than 2 from the current vertice,
+						// change the distance to it as: dist = dist to the current vertice + 1
+					else if (p[it] == 1 && pDist[it].second != 0) //else if the visited neighbour is '1' in the matrix and the distance to it isn't equal to 0
+						pDist[it].second = 0; //change the distance to it to 0.
 				}
 			}
 		}
