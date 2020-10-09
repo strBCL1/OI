@@ -118,12 +118,12 @@ int main()
 	int firstOnePos = findFirstOne(); //Finding the first occurance of '1' in vector of pairs
 	BFS(adj, firstOnePos); //Start doing BFS
 	
-	sort(pDist.begin(), pDist.end());
+	sort(pDist.begin(), pDist.end()); //Sort the vector of pairs and print it
 	for (auto it : pDist)
 		cout << it.first << " " << it.second << "\n";
 
 	cout << "\n";
-	for (auto it : p)
+	for (auto it : p) //Print the distance to each vertice
 		cout << it << "\n";
 
 	cout << "\n";
