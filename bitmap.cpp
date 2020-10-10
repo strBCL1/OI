@@ -2,10 +2,10 @@
 using namespace std;
 #define pb push_back
 int n, m; //Initializing the size of the bitmap
-vector<bool> visited(182, false); //Initializing the vector of the visited nodes
+vector<bool> visited(n*m+6, false); //Initializing the vector of the visited nodes
 vector<int> p; //Initializing the vector for making the pairs (adj. list pos. <-> vertice)
-vector<int> pDist(182); //Initializing the vector of distances for each vertice to the closest '1' (adj. num <-> vertice)
-
+vector<int> pDist(n*m+6); //Initializing the vector of distances for each vertice to the closest '1' (adj. num <-> vertice)
+ 
 /*Check if the current node is '1' in p vector*/
 bool isOneInP(int num) {
 	return (p[num] == 1);
