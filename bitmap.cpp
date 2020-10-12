@@ -1,3 +1,4 @@
+#include <bits/stdc++.h>
 using namespace std;
 #define pb push_back
 int n, m; //Initializing the size of the bitmap
