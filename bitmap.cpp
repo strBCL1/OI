@@ -1,6 +1,5 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define pb push_back
 int n, m; //Initializing the size of the bitmap
 queue<int> q; //Initializing the queue for BFS traversal
 
@@ -54,15 +53,15 @@ vector<int> addNeighbours(vector<int> adj[], vector<int> pDist, vector<bool> vis
         }
 
         if (isSafe(i, numRow, n, m))         //Checking and adding current cell to the current adj list
-            adj[curAdjPos].pb(curAdjPos);
+            adj[curAdjPos].push_back(curAdjPos);
         if (isSafe(i-1, numRow, n, m))       //Checking and adding left cell to the current adj list
-            adj[curAdjPos].pb(curAdjPos-1);
+            adj[curAdjPos].push_back(curAdjPos-1);
         if (isSafe(i+1, numRow, n, m))       //Checking and adding right cell to the current adj list
-            adj[curAdjPos].pb(curAdjPos+1);
+            adj[curAdjPos].push_back(curAdjPos+1);
 
         if (curAdjPos >= m) { //If it's a 2nd row or more, 
-            adj[curAdjPos-m].pb(curAdjPos); //add the current node as a neighbour to the upper node and 
-            adj[curAdjPos].pb(curAdjPos-m); //add the upper node to the current node
+            adj[curAdjPos-m].push_back(curAdjPos); //add the current node as a neighbour to the upper node and 
+            adj[curAdjPos].push_back(curAdjPos-m); //add the upper node to the current node
         }
     }
     return p; //Update the bitmap to the current values
@@ -73,8 +72,9 @@ int main()
     ios_base::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
+    //Get input from file and output into a file;
+    // freopen("input.txt", "r", stdin);
+    // freopen("output.txt", "w", stdout);
     
     cin >> n >> m; cin.ignore(numeric_limits<streamsize>::max(), '\n'); //Inputting the size of the bitmap
 
